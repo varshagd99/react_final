@@ -1,9 +1,10 @@
 
-from flask import Flask, render_template, request, redirect, url_for, session 
+from flask import Flask, render_template, request, redirect, url_for, session ,json
 import re
 import psycopg2
-app=Flask(__name__)
+from  werkzeug.security import generate_password_hash, check_password_hash 
 
+app=Flask(__name__)
 @app.route('/api')
 def index():
     con = psycopg2.connect('postgres://pmotbfypffbrrt:1f75e4090383473f9d5fd2614ae03b839cb94c7c1d2d37941be23fa549ba4c44@ec2-50-19-247-157.compute-1.amazonaws.com:5432/d276mkc2k6kji4')
@@ -19,11 +20,11 @@ def index():
 @app.route('/register', methods =['POST']) 
 def register(): 
     msg = '' 
-    data=request.get_json()
-    print(request.get_json())
+    data = json.loads(request.data)
+    print(data)
     if request.method == 'POST' and 'username' in data and 'password' in data and 'email' in data : 
         username = data['username']
-        password = data['password']
+        password = generate_password_hash(data['password'])
         email = data['email']
         con = psycopg2.connect('postgres://pmotbfypffbrrt:1f75e4090383473f9d5fd2614ae03b839cb94c7c1d2d37941be23fa549ba4c44@ec2-50-19-247-157.compute-1.amazonaws.com:5432/d276mkc2k6kji4')
         cur = con.cursor()
@@ -39,6 +40,8 @@ def register():
             msg = 'Please fill out the form !'
         else: 
             cur.execute('INSERT INTO users (user_name,email_id,password) VALUES (%s, %s, %s)', (username, email, password, )) 
+            
+            
             con.commit() 
             cur.close()
             con.close()
