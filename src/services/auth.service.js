@@ -15,4 +15,19 @@ const register = (username,email,password)=>{
     }).then(response=>response.json())
 }
 
-export default {register};
+
+const Login = (email,password)=>{
+  return fetch('/login',{
+      method:'POST',
+      body:JSON.stringify({
+
+    email:email,
+    password:password
+
+
+      })
+  }).then(response=>response.json())
+}
+
+export default {register,Login};
+

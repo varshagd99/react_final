@@ -93,6 +93,7 @@ const Register = (props) => {
               error.response.data.message) ||
             error.message ||
             error.toString();
+            console.log(error.response);
 
           setMessage(resMessage);
           setSuccessful(false);
