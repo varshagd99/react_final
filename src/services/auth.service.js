@@ -15,4 +15,6 @@ const register = (username,email,password)=>{
     }).then(response=>response.json())
 }
 
+
+
 export default {register};
