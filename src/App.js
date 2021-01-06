@@ -4,9 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 
 import { Switch, Route, Link } from "react-router-dom";
-import Register from "./components/Register";
-import Home from "./components/Home";
-import Login from "./components/Login";
+import Register from "./Components/Register";
+import Home from "./Components/Home";
+import Login from "./Components/Login";
 const App=()=> {
   return (
     <div className="App">
