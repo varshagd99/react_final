@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 
 import AuthService from "../services/auth.service";
+import User from "./User";
 
 const required = (value) => {
   if (!value) {
@@ -64,7 +65,7 @@ const Login = (props) => {
   const handlelogin = (e) => {
     e.preventDefault();
 
-    setMessage("");
+    setMessage(" ");
     setSuccessful(false);
 
     form.current.validateAll();
@@ -72,8 +73,13 @@ const Login = (props) => {
     if (checkBtn.current.context._errors.length === 0) {
       AuthService.Login( email, password).then(
         (response) => {
-          setMessage(response.data.message);
-          setSuccessful(true);
+          
+          if(response.message =='Login Successful'){
+           
+            setSuccessful(true);
+          }
+          setMessage(response.message);
+
         },
         (error) => {
           const resMessage =
@@ -93,17 +99,18 @@ const Login = (props) => {
   return (
     
     <div className="col-md-12">
-      <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
+      
+
 
         <Form onSubmit={handlelogin} ref={form}>
+        <div className="card card-container">
           {!successful && (
             <div>
-
+              <img
+              src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+              alt="profile-img"
+              className="profile-img-card"
+              />
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <Input
@@ -133,7 +140,6 @@ const Login = (props) => {
               </div>
             </div>
           )}
-
           {message && (
             <div className="form-group">
               <div
@@ -144,10 +150,23 @@ const Login = (props) => {
               </div>
             </div>
           )}
+
+            
+
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
+          </div>
         </Form>
+     
+      <div>
+          {successful && (
+           <div>
+             <User/>
+           </div>
+         )}
+
       </div>
     </div>
+    
   );
 };
 

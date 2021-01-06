@@ -1,10 +1,11 @@
 import React from 'react';
 import Chart from './Chart'
 
-const Home=()=>{
+const User=()=>{
     return (
     <div>
-        <h1>Home</h1>
+        <h1>WELCOME USER</h1>
+        <Chart/>
     </div>);
 }
-export default Home
+export default User

@@ -14,9 +14,6 @@ const App=()=> {
         <Link to={"/"} className="navbar-brand">
           App
         </Link>
-        
-
-        
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to={"/login"} className="nav-link">
@@ -41,6 +38,7 @@ const App=()=> {
           
         </Switch>
       </div>
+     
     
 
     </div>

@@ -17,7 +17,7 @@ def index():
     con.close()
     return "<h2>hello</h2>"
 
-@app.route('/register', methods =['POST']) 
+@app.route('/register', methods =['POST'])
 def register(): 
     msg = '' 
     data = json.loads(request.data)
@@ -78,7 +78,8 @@ def login():
                 print(x)
                 if x :
                     msg = 'Login Successful'
-                    return render_template('./Components/Home.js')
+                    
+
                 else :
                     msg = 'Please Check password and email'
 
@@ -86,11 +87,10 @@ def login():
             con.commit()
             cur.close()
             con.close()
-        
             print(msg)
 
-        return {'msg':msg}
-    
+        return {'message':msg}
+
     except Exception as e:
         print(e)
 
@@ -99,9 +99,13 @@ def login():
 def emotionGraph():
     data = request.get_json()
     print(request.get_json())
-    user_id = data['user_id']
-    start_date = data['start_date']
-    end_date = data['end_date']
+    # user_id = data['user_id']
+    # start_date = data['start_date']
+    # end_date = data['end_date']
+
+    user_id = 17
+    start_date = '2021-01-01'
+    end_date = '2021-01-03'
 
     con = psycopg2.connect('postgres://pmotbfypffbrrt:1f75e4090383473f9d5fd2614ae03b839cb94c7c1d2d37941be23fa549ba4c44@ec2-50-19-247-157.compute-1.amazonaws.com:5432/d276mkc2k6kji4')
     cur = con.cursor()
