@@ -1,5 +1,4 @@
 
-import React from 'react'
 
 const register = (username,email,password)=>{
     return fetch('/register',{
@@ -17,8 +16,8 @@ const register = (username,email,password)=>{
 
 
 
-export default {register};
-const Login = (email,password)=>{
+
+const login = (email,password)=>{
   return fetch('/login',{
       method:'POST',
       body:JSON.stringify({
@@ -28,8 +27,17 @@ const Login = (email,password)=>{
 
 
       })
-  }).then(response=>response.json())
+  }).then((response) =>  response.json())
 }
 
-export default {register,Login};
+const logout = () => {
+  localStorage.removeItem("user");
+};
+
+
+const getCurrentUser = () => {
+  return JSON.parse(localStorage.getItem("user"));
+};
+
+export default {register,login,logout,getCurrentUser};
 

@@ -2,12 +2,29 @@ import React,{useState,useEffect} from 'react';
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
+import AuthService from "./services/auth.service"
 import { Switch, Route, Link } from "react-router-dom";
-import Register from "./Components/Register";
-import Home from "./Components/Home";
-import Login from "./Components/Login";
+import Profile from "./components/Profile";
+import Register from "./components/Register";
+import Home from "./components/Home";
+import Login from "./components/Login";
 const App=()=> {
+
+
+  const [currentUser, setCurrentUser] = useState(undefined);
+
+ useEffect(() => {
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      setCurrentUser(user);
+      
+    }
+  }, []);
+
+  const logOut = () => {
+    AuthService.logout()
+  }
   return (
     <div className="App">
        <nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -16,7 +33,16 @@ const App=()=> {
         </Link>
         
 
-        
+        {currentUser ? (
+          <div className="navbar-nav ml-auto">
+            
+            <li className="nav-item">
+              <a href="/login" className="nav-link" onClick={logOut}>
+                LogOut
+              </a>
+            </li>
+          </div>
+        ) : (
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to={"/login"} className="nav-link">
@@ -30,7 +56,7 @@ const App=()=> {
               </Link>
             </li>
           </div>
-        
+          )}
       </nav>
 
       <div className="container mt-3">
@@ -38,7 +64,7 @@ const App=()=> {
           <Route exact path={["/", "/home"]} component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          
+          <Route exact path="/profile" component={Profile} />
         </Switch>
       </div>
     
