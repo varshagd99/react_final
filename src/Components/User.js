@@ -12,7 +12,6 @@ import AuthService from "../services/auth.service";
 const User=()=>{
     const [start_date, setStartDate] = useState(new Date());
     const [end_date, setEndDate] = useState(new Date());
-    
     const [data,setData] =useState({})
     const handleSubmit = () =>{
     

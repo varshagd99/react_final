@@ -6,12 +6,10 @@ import {Bar, Line, Pie} from 'react-chartjs-2';
 
 
 class Chart extends Component{
- 
- 
+
   constructor(props){
     super(props);
 
-    
     // const [data,setData] =useState({})
     console.log(props.data)
     this.state ={

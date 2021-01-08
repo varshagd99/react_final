@@ -1,11 +1,16 @@
 import React from 'react';
-import Chart from './Chart'
+import {Jumbotron,button} from 'react-bootstrap'
+
+
 
 
 const Home=()=>{
     return (
-    <div>
+    <div className="container">
+        <Jumbotron>
         <h1>Home</h1>
+        </Jumbotron>
+       
     </div>);
 }
 export default Home
