@@ -1,9 +1,20 @@
 import React, { useState, useRef } from "react";
+import ClipLoader from "react-spinners/DotLoader";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
+
+import { css } from "@emotion/core";
+
 import AuthService from "../services/auth.service";
+
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 const required = (value) => {
   if (!value) {
@@ -23,7 +34,8 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
+ 
+  
   const onChangeEmail = (e) => {
     const email = e.target.value;
     setEmail(email);
@@ -36,6 +48,7 @@ const Login = (props) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     setMessage("");
     setLoading(true);
@@ -50,7 +63,7 @@ const Login = (props) => {
           }
           console.log(response)
           if(response.status)
-          { props.history.push("/profile");
+          { props.history.push("/user");
           window.location.reload();
         }
         else
@@ -59,6 +72,7 @@ const Login = (props) => {
          setLoading(false)
         },
         (error) => {
+          setLoading(false);
           const resMessage =
             (error.response &&
               error.response.data &&
@@ -125,11 +139,28 @@ const Login = (props) => {
               </div>
             </div>
           )}
+
+            
+
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
+        
         </Form>
+
+        
+
       </div>
+      
+     
+      
     </div>
+
+   
+
+    
+    
+    
   );
+          
 };
 
-export default Login;
+export default Login

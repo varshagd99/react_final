@@ -4,10 +4,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import AuthService from "./services/auth.service"
 import { Switch, Route, Link } from "react-router-dom";
-import Profile from "./components/Profile";
+
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Login from "./components/Login";
+import User from "./components/User"
 const App=()=> {
 
 
@@ -29,7 +30,7 @@ const App=()=> {
     <div className="App">
        <nav className="navbar navbar-expand navbar-dark bg-dark">
         <Link to={"/"} className="navbar-brand">
-          App
+          Home
         </Link>
         
 
@@ -64,9 +65,10 @@ const App=()=> {
           <Route exact path={["/", "/home"]} component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/profile" component={Profile} />
+          <Route exact path="/user" component={User} />
         </Switch>
       </div>
+     
     
 
     </div>

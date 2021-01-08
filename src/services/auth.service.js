@@ -39,5 +39,23 @@ const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
 
-export default {register,login,logout,getCurrentUser};
+
+const Emotion = (start_date,end_date,chartData)=>{
+  return fetch('/emotionGraph',{
+      method:'POST',
+      body:JSON.stringify({
+
+        start_date:start_date,
+        end_date:end_date,
+        chartData
+
+
+      })
+     
+  }).then(response=>response.json())
+  
+}
+// console.log(Emotion)
+export default {register,login,logout,getCurrentUser,Emotion}
+
 
