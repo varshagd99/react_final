@@ -1,14 +1,24 @@
 import React, { useState, useRef } from "react";
+import ClipLoader from "react-spinners/DotLoader";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { css } from "@emotion/core";
+
+
 
 
 
 import AuthService from "../services/auth.service";
 import User from "./User";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 const required = (value) => {
   if (!value) {
@@ -50,6 +60,8 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
+  let [loading, setLoading] = useState(false);
+  let [color, setColor] = useState("#6495ED");
 
 
   const onChangeEmail = (e) => {
@@ -64,6 +76,7 @@ const Login = (props) => {
 
   const handlelogin = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     setMessage(" ");
     setSuccessful(false);
@@ -78,10 +91,12 @@ const Login = (props) => {
            
             setSuccessful(true);
           }
+          setLoading(false);
           setMessage(response.message);
 
         },
         (error) => {
+          setLoading(false);
           const resMessage =
             (error.response &&
               error.response.data &&
@@ -97,11 +112,8 @@ const Login = (props) => {
   };
 
   return (
-    
-    <div className="col-md-12">
-      
-
-
+    <div>
+      <div className="col-md-12">
         <Form onSubmit={handlelogin} ref={form}>
         <div className="card card-container">
           {!successful && (
@@ -138,6 +150,7 @@ const Login = (props) => {
               <div className="form-group">
                 <button className="btn btn-primary btn-block">Login</button>
               </div>
+              <ClipLoader color={color} loading={loading} css={override} size={50} />
             </div>
           )}
           {message && (
@@ -157,7 +170,10 @@ const Login = (props) => {
           </div>
         </Form>
      
-      <div>
+      
+    </div>
+
+    <div>
           {successful && (
            <div>
              <User/>
@@ -165,7 +181,9 @@ const Login = (props) => {
          )}
 
       </div>
+
     </div>
+    
     
   );
 };

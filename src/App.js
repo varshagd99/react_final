@@ -12,7 +12,7 @@ const App=()=> {
     <div className="App">
        <nav className="navbar navbar-expand navbar-dark bg-dark">
         <Link to={"/"} className="navbar-brand">
-          App
+          Home
         </Link>
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
@@ -35,7 +35,6 @@ const App=()=> {
           <Route exact path={["/", "/home"]} component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          
         </Switch>
       </div>
      

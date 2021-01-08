@@ -67,6 +67,7 @@ def login():
             cur.execute('SELECT * FROM users WHERE email_id = %s', (email,)) 
 
             usertable = cur.fetchone()
+            print(usertable)
 
 
             if not usertable:
@@ -97,15 +98,16 @@ def login():
 
 @app.route("/emotionGraph",methods=['GET', 'POST'])
 def emotionGraph():
-    data = request.get_json()
-    print(request.get_json())
-    # user_id = data['user_id']
-    # start_date = data['start_date']
-    # end_date = data['end_date']
-
+    data = json.loads(request.data)
+    print(data)
+    #user_id = data['user_id']
     user_id = 17
-    start_date = '2021-01-01'
-    end_date = '2021-01-03'
+    start_date = data['start_date']
+    end_date = data['end_date']
+
+    
+    # start_date = '2021-01-01'
+    # end_date = '2021-01-03'
 
     con = psycopg2.connect('postgres://pmotbfypffbrrt:1f75e4090383473f9d5fd2614ae03b839cb94c7c1d2d37941be23fa549ba4c44@ec2-50-19-247-157.compute-1.amazonaws.com:5432/d276mkc2k6kji4')
     cur = con.cursor()
@@ -115,7 +117,7 @@ def emotionGraph():
 
     response = {'angry':x[0],'disgusted':x[1],'fearful':x[2],'happy':x[3],'neutral':x[4],'sad':x[5],'surprise':x[6]}
 
-    return jsonify(response)
+    return(response)
 
 
 if __name__=="__main__":

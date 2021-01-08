@@ -29,20 +29,21 @@ const Login = (email,password)=>{
   }).then(response=>response.json())
 }
 
-const Emotion = (user_id,start_date,end_date)=>{
+const Emotion = (start_date,end_date,chartData)=>{
   return fetch('/emotionGraph',{
       method:'POST',
       body:JSON.stringify({
 
-        user_id:user_id,
         start_date:start_date,
-        end_date:end_date
+        end_date:end_date,
+        chartData
 
 
       })
+     
   }).then(response=>response.json())
-
+  
 }
-
+// console.log(Emotion)
 export default {register,Login,Emotion};
 
