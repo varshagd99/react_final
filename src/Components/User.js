@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
  
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import AuthService from "../services/auth.service";
+import UserService from "../services/user.service";
 
 // let data={}
 
@@ -16,7 +16,7 @@ const User=()=>{
     const [data,setData] =useState({})
     const handleSubmit = () =>{
     
-        AuthService.Emotion( start_date, end_date).then(
+        UserService.Emotion( start_date, end_date).then(
             (response) => {
 
                 // console.log(response)

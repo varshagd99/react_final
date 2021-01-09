@@ -6,7 +6,7 @@ def encodeAuthToken(user_id, user_type):
         admin = True if user_type=='A' else False
 
         payload = {
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=60),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=7200),
             'iat': datetime.datetime.utcnow(),
             'sub': user_id,
             'admin': admin

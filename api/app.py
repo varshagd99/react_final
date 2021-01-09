@@ -21,11 +21,12 @@ def check_header(request):
 
     if token:
         decoded = decodeAuthToken(token)
+        print(decoded)
         if not isinstance(decoded, str):
             if decoded['admin']:
-                return 'A'
+                return [decoded['sub'],'A']
             else:
-                return 'U'
+                return [decoded['sub'],'U']
 
 @app.route('/api')
 def index():
@@ -128,12 +129,11 @@ def login():
 @app.route("/emotionGraph",methods=['GET', 'POST'])
 def emotionGraph():
     data = json.loads(request.data)
-    print(data)
-    #user_id = data['user_id']
-    user_id = 17
+    data_1=check_header(request)
+    user_id = data_1[0]
     start_date = data['start_date']
     end_date = data['end_date']
-
+    print(data_1)
     
     # start_date = '2021-01-01'
     # end_date = '2021-01-03'
