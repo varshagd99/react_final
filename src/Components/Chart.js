@@ -1,31 +1,35 @@
 import React, {Component,useState }from 'react';
 
 import {Bar, Line, Pie} from 'react-chartjs-2';
+import DatePicker from "react-datepicker";
+import {Jumbotron,button} from 'react-bootstrap'
+import "react-datepicker/dist/react-datepicker.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import AuthService from "../services/auth.service";
 
 
 
+// class Chart extends Component{
+function Chart(chartData,displayTitle,displayLegend,legendPosition){
+  // constructor(props){
+    // super(props);
+    let [data,setData] =useState({})
+    console.log("Inside Chart")
 
-class Chart extends Component{
-
-  constructor(props){
-    super(props);
-
-    // const [data,setData] =useState({})
-    console.log(props.data)
-    this.state ={
-        chartData:{
+        chartData={
           labels: ['angry', 'disgusted', 'fearful', 'happy', 'neutral', 'sad','surprise'],
           datasets:[
             {
               label:'Emotions',
               data:[
+                //{data}
                 6,
                 1,
                 15,
                 7,
                 3,
                 8,
-                1
+                75
               ],
               backgroundColor:[
                 'rgba(255, 99, 132, 0.6)',
@@ -35,43 +39,42 @@ class Chart extends Component{
                 'rgba(153, 102, 255, 0.6)',
                 'rgba(255, 159, 64, 0.6)',
                 'rgba(200, 99, 132, 0.6)'
-              ]
-            }
-          ]
-        }
-      }
-  }
+              ],
+            },
 
-  render(){
+          ]
+
+        }
+      
+     console.log(data)
+  // render(){
+    
     return (
       <div>
         <div className="chart">
-        
-
         <Bar
-          data={this.state.chartData}
+          // data={this.state.chartData}
+          data={chartData.data}
           width={30}
           height={15}
           options={{
             title:{
-              display:this.props.displayTitle,
-              text:'Emotion Analysis ',
+              display:displayTitle,
+              text:'Emotion Analysis',
               fontSize:25
             },
             legend:{
-              display:this.props.displayLegend,
-              position:this.props.legendPosition
+              display:displayLegend,
+              position:legendPosition
             }
           }}
         />
 
       </div>
-
       </div>
-
-      
     )
-  }
-}
+  // });
+        }
+      
 
 export default Chart;

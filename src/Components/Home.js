@@ -1,17 +1,18 @@
 import React from 'react';
-<<<<<<< HEAD
+import './Home.css'
 import {Jumbotron,button} from 'react-bootstrap'
-
-=======
->>>>>>> 67ad120a609406784df91265a3b0b0d93bf4f550
 
 
 
 const Home=()=>{
     return (
     <div className="container">
-        <Jumbotron>
-        <h1>Home</h1>
+        <Jumbotron className="Jumbo">
+        <h1>Facial Emotional Analysis</h1>
+        <div className="face">
+            Hello
+        </div>
+
         </Jumbotron>
        
     </div>);

@@ -40,14 +40,14 @@ const getCurrentUser = () => {
 };
 
 
-const Emotion = (start_date,end_date,chartData)=>{
+const Emotion = (start_date,end_date)=>{
   return fetch('/emotionGraph',{
       method:'POST',
       body:JSON.stringify({
 
         start_date:start_date,
         end_date:end_date,
-        chartData
+        
 
 
       })

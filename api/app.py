@@ -11,6 +11,22 @@ from jwt_token import encodeAuthToken,decodeAuthToken
 app=Flask(__name__)
 CORS(app)
 
+def encodeAuthToken(user_id, user_type):
+    try:
+        admin = True if user_type=='A' else False
+
+        payload = {
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=60),
+            'iat': datetime.datetime.utcnow(),
+            'sub': user_id,
+            'admin': admin
+        }
+        token = jwt.encode(payload, 'super-secret-key', algorithm='HS256')
+        return token
+    except Exception as e:
+        print(e)
+        return e
+
 def check_header(request):
 
     auth_header = request.headers.get('Authorization')
@@ -98,11 +114,13 @@ def login():
                     user_id=usertable[0]
                     user_type=usertable[4]
                     auth_token=encodeAuthToken(user_id,user_type)
+                    print(auth_token)
 
                     msg = 'Login Successful'
                 
                 else :
-                    return jsonify({'status':False,
+                    return jsonify(
+                    {'status':False,
                     'msg':'Wrong Password'})
 
 
@@ -110,12 +128,12 @@ def login():
             cur.close()
             con.close()
             print(msg)
+        
 
-        return  jsonify({
+        return jsonify({
 
             'status':True,
-            'auth_token':auth_token
-        })
+            'auth_token':str(auth_token)})
     
     except Exception as e:
         return jsonify({
@@ -133,10 +151,6 @@ def emotionGraph():
     user_id = 17
     start_date = data['start_date']
     end_date = data['end_date']
-
-    
-    # start_date = '2021-01-01'
-    # end_date = '2021-01-03'
 
     con = psycopg2.connect('postgres://pmotbfypffbrrt:1f75e4090383473f9d5fd2614ae03b839cb94c7c1d2d37941be23fa549ba4c44@ec2-50-19-247-157.compute-1.amazonaws.com:5432/d276mkc2k6kji4')
     cur = con.cursor()

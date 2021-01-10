@@ -121,6 +121,7 @@ const Register = (props) => {
                   className="form-control"
                   name="username"
                   value={username}
+                  placeholder="Enter your name"
                   onChange={onChangeUsername}
                   validations={[required, vusername]}
                 />
@@ -132,6 +133,7 @@ const Register = (props) => {
                   type="text"
                   className="form-control"
                   name="email"
+                  placeholder="Enter your email"
                   value={email}
                   onChange={onChangeEmail}
                   validations={[required, validEmail]}
@@ -144,6 +146,7 @@ const Register = (props) => {
                   type="password"
                   className="form-control"
                   name="password"
+                  placeholder="Enter password"
                   value={password}
                   onChange={onChangePassword}
                   validations={[required, vpassword]}

@@ -5,16 +5,8 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
 
-import { css } from "@emotion/core";
-
 import AuthService from "../services/auth.service";
 
-
-const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
-`;
 
 const required = (value) => {
   if (!value) {
@@ -105,6 +97,7 @@ const Login = (props) => {
               type="text"
               className="form-control"
               name="email"
+              placeholder="Enter your email"
               value={email}
               onChange={onChangeEmail}
               validations={[required]}
@@ -117,6 +110,7 @@ const Login = (props) => {
               type="password"
               className="form-control"
               name="password"
+              placeholder="Enter your password"
               value={password}
               onChange={onChangePassword}
               validations={[required]}
@@ -139,12 +133,14 @@ const Login = (props) => {
               </div>
             </div>
           )}
-
+         
             
 
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         
         </Form>
+
+        
 
         
 
