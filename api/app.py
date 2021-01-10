@@ -1,10 +1,32 @@
 
-from flask import Flask, render_template, request, redirect, url_for, session ,json
+from flask import Flask, render_template, request, redirect, url_for, session ,json,jsonify
 import re
 import psycopg2
 from  werkzeug.security import generate_password_hash, check_password_hash 
+from flask_cors import CORS
+import jwt
+import datetime
+from jwt_token import encodeAuthToken,decodeAuthToken
 
 app=Flask(__name__)
+CORS(app)
+
+def check_header(request):
+
+    auth_header = request.headers.get('Authorization')
+    if auth_header:
+        token = auth_header.split(" ")[1] 
+    else:
+        token = ''
+
+    if token:
+        decoded = decodeAuthToken(token)
+        if not isinstance(decoded, str):
+            if decoded['admin']:
+                return 'A'
+            else:
+                return 'U'
+
 @app.route('/api')
 def index():
     con = psycopg2.connect('postgres://pmotbfypffbrrt:1f75e4090383473f9d5fd2614ae03b839cb94c7c1d2d37941be23fa549ba4c44@ec2-50-19-247-157.compute-1.amazonaws.com:5432/d276mkc2k6kji4')
@@ -32,12 +54,7 @@ def register():
         account = cur.fetchone() 
         if account: 
             msg = 'Account already exists !'
-        elif not re.match(r'[^@]+@[^@]+\.[^@]+', email): 
-            msg = 'Invalid email address !'
-        elif not re.match(r'[A-Za-z0-9]+', username): 
-            msg = 'Username must contain only characters and numbers !'
-        elif not username or not password or not email: 
-            msg = 'Please fill out the form !'
+        
         else: 
             cur.execute('INSERT INTO users (user_name,email_id,password) VALUES (%s, %s, %s)', (username, email, password, )) 
             
@@ -58,7 +75,6 @@ def login():
     try:
         msg = '' 
         data = json.loads(request.data)
-        print(data)
         if request.method == 'POST' and 'password' in data and 'email' in data : 
             password = data['password']
             email = data['email']
@@ -71,18 +87,23 @@ def login():
 
 
             if not usertable:
-                msg = 'Account does not exists Please register'
+                return jsonify({'status':False,
+               'msg':'Email doesnot exist'})
 
 
             elif usertable:
                 x=check_password_hash(usertable[3],password)
                 print(x)
                 if x :
-                    msg = 'Login Successful'
-                    
+                    user_id=usertable[0]
+                    user_type=usertable[4]
+                    auth_token=encodeAuthToken(user_id,user_type)
 
+                    msg = 'Login Successful'
+                
                 else :
-                    msg = 'Please Check password and email'
+                    return jsonify({'status':False,
+                    'msg':'Wrong Password'})
 
 
             con.commit()
@@ -90,10 +111,18 @@ def login():
             con.close()
             print(msg)
 
-        return {'message':msg}
+        return  jsonify({
 
+            'status':True,
+            'auth_token':auth_token
+        })
+    
     except Exception as e:
-        print(e)
+        return jsonify({
+            'status': False,
+            'error': e
+        })
+
 
 
 @app.route("/emotionGraph",methods=['GET', 'POST'])

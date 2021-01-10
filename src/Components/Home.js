@@ -1,6 +1,9 @@
 import React from 'react';
+<<<<<<< HEAD
 import {Jumbotron,button} from 'react-bootstrap'
 
+=======
+>>>>>>> 67ad120a609406784df91265a3b0b0d93bf4f550
 
 
 

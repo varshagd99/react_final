@@ -3,16 +3,12 @@ import ClipLoader from "react-spinners/DotLoader";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import { isEmail } from "validator";
-import "bootstrap/dist/css/bootstrap.min.css";
+
+
 import { css } from "@emotion/core";
 
-
-
-
-
 import AuthService from "../services/auth.service";
-import User from "./User";
+
 
 const override = css`
   display: block;
@@ -30,40 +26,16 @@ const required = (value) => {
   }
 };
 
-const validEmail = (value) => {
-  if (!isEmail(value)) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This is not a valid email.
-      </div>
-    );
-  }
-};
-
-
-
-const vpassword = (value) => {
-  if (value.length < 6 || value.length > 40) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The password must be between 6 and 40 characters.
-      </div>
-    );
-  }
-};
-
 const Login = (props) => {
   const form = useRef();
   const checkBtn = useRef();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [successful, setSuccessful] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  let [loading, setLoading] = useState(false);
-  let [color, setColor] = useState("#6495ED");
-
-
+ 
+  
   const onChangeEmail = (e) => {
     const email = e.target.value;
     setEmail(email);
@@ -74,26 +46,30 @@ const Login = (props) => {
     setPassword(password);
   };
 
-  const handlelogin = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     setLoading(true);
 
-    setMessage(" ");
-    setSuccessful(false);
+    setMessage("");
+    setLoading(true);
 
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      AuthService.Login( email, password).then(
+      AuthService.login(email, password).then(
         (response) => {
-          
-          if(response.message =='Login Successful'){
-           
-            setSuccessful(true);
+          if (response.auth_token) {
+            localStorage.setItem("user", JSON.stringify(response));
           }
-          setLoading(false);
-          setMessage(response.message);
+          console.log(response)
+          if(response.status)
+          { props.history.push("/user");
+          window.location.reload();
+        }
+        else
+           setMessage(response.msg)
 
+         setLoading(false)
         },
         (error) => {
           setLoading(false);
@@ -104,61 +80,61 @@ const Login = (props) => {
             error.message ||
             error.toString();
 
+          setLoading(false);
           setMessage(resMessage);
-          setSuccessful(false);
         }
       );
+    } else {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      <div className="col-md-12">
-        <Form onSubmit={handlelogin} ref={form}>
-        <div className="card card-container">
-          {!successful && (
-            <div>
-              <img
-              src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-              alt="profile-img"
-              className="profile-img-card"
-              />
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="email"
-                  value={email}
-                  onChange={onChangeEmail}
-                  validations={[required, validEmail]}
-                />
-              </div>
+    <div className="col-md-12">
+      <div className="card card-container">
+        <img
+          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          alt="profile-img"
+          className="profile-img-card"
+        />
 
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <Input
-                  type="password"
-                  className="form-control"
-                  name="password"
-                  value={password}
-                  onChange={onChangePassword}
-                  validations={[required, vpassword]}
-                />
-              </div>
+        <Form onSubmit={handleLogin} ref={form}>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <Input
+              type="text"
+              className="form-control"
+              name="email"
+              value={email}
+              onChange={onChangeEmail}
+              validations={[required]}
+            />
+          </div>
 
-              <div className="form-group">
-                <button className="btn btn-primary btn-block">Login</button>
-              </div>
-              <ClipLoader color={color} loading={loading} css={override} size={50} />
-            </div>
-          )}
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <Input
+              type="password"
+              className="form-control"
+              name="password"
+              value={password}
+              onChange={onChangePassword}
+              validations={[required]}
+            />
+          </div>
+
+          <div className="form-group">
+            <button className="btn btn-primary btn-block" disabled={loading}>
+              {loading && (
+                <span className="spinner-border spinner-border-sm"></span>
+              )}
+              <span>Login</span>
+            </button>
+          </div>
+
           {message && (
             <div className="form-group">
-              <div
-                className={ successful ? "alert alert-success" : "alert alert-danger" }
-                role="alert"
-              >
+              <div className="alert alert-danger" role="alert">
                 {message}
               </div>
             </div>
@@ -167,25 +143,24 @@ const Login = (props) => {
             
 
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
-          </div>
+        
         </Form>
+
+        
+
+      </div>
+      
      
       
     </div>
 
-    <div>
-          {successful && (
-           <div>
-             <User/>
-           </div>
-         )}
+   
 
-      </div>
-
-    </div>
+    
     
     
   );
+          
 };
 
-export default Login;
+export default Login

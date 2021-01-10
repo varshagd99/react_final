@@ -1,5 +1,4 @@
 
-import React from 'react'
 
 const register = (username,email,password)=>{
     return fetch('/register',{
@@ -16,7 +15,9 @@ const register = (username,email,password)=>{
 }
 
 
-const Login = (email,password)=>{
+
+
+const login = (email,password)=>{
   return fetch('/login',{
       method:'POST',
       body:JSON.stringify({
@@ -26,8 +27,18 @@ const Login = (email,password)=>{
 
 
       })
-  }).then(response=>response.json())
+  }).then((response) =>  response.json())
 }
+
+const logout = () => {
+  localStorage.removeItem("user");
+};
+
+
+const getCurrentUser = () => {
+  return JSON.parse(localStorage.getItem("user"));
+};
+
 
 const Emotion = (start_date,end_date,chartData)=>{
   return fetch('/emotionGraph',{
@@ -45,5 +56,6 @@ const Emotion = (start_date,end_date,chartData)=>{
   
 }
 // console.log(Emotion)
-export default {register,Login,Emotion};
+export default {register,login,logout,getCurrentUser,Emotion}
+
 
