@@ -146,7 +146,7 @@ def emotionGraph():
 
     response = {'angry':x[0],'disgusted':x[1],'fearful':x[2],'happy':x[3],'neutral':x[4],'sad':x[5],'surprise':x[6]}
 
-    return(response)
+    return jsonify({'data':list(x)})
 
 
 if __name__=="__main__":
