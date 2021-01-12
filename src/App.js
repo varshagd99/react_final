@@ -20,7 +20,7 @@ const App=()=> {
 
     if (user) {
       setCurrentUser(user);
-      
+
     }
   }, []);
 
@@ -29,7 +29,7 @@ const App=()=> {
   }
   return (
     <div className="App">
-       <nav className="navbar navbar-expand navbar-dark bg-dark">
+       <nav className="navbar navbar-expand navbar-dark">
         <Link to={"/"} className="navbar-brand">
           Home
         </Link>

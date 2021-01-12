@@ -12,6 +12,27 @@
   pointer-events: none;
 }
 
+.nav {
+  background: rgba(0,0,0,0.5);
+  border-bottom: #282c34;
+}
+
+.nav-item {
+  font-size: 1vw;
+  font-weight: bold;
+  color: white;
+  background:rgba(5,5,5,0.5);
+  border-radius: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 17px;
+  padding-right: 17px;
+  border-width: 2px;
+  border-color: aliceblue;
+  margin-right: 20px;
+}
+
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -47,6 +68,8 @@ label {
 }
 
 .card-container.card {
+  font-size: 18px;
+  font-stretch: expanded;
   background: rgba(0,0,0,0.5);
   max-width: 350px !important;
   padding: 40px 40px;
