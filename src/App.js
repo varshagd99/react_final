@@ -5,10 +5,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import AuthService from "./services/auth.service"
 import { Switch, Route, Link } from "react-router-dom";
 
-import Register from "./components/Register";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import User from "./components/User"
+import Register from "./Components/Register";
+import Home from "./Components/Home";
+import Login from "./Components/Login";
+import User from "./Components/User"
 const App=()=> {
 
 
@@ -16,6 +16,7 @@ const App=()=> {
 
  useEffect(() => {
     const user = AuthService.getCurrentUser();
+    document.title ='Facial Emotion Recognition'
 
     if (user) {
       setCurrentUser(user);

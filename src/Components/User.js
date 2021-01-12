@@ -1,13 +1,21 @@
 import React, { useState,useEffect } from "react";
 import DatePicker from "react-datepicker";
- 
+
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import UserService from "../services/user.service";
 import {Bar} from 'react-chartjs-2';
 
 
-const User=()=>{
+
+
+    
+
+
+function User(){
+    const [isState,setState]=useState(false);
+    //let state1=0;
+    
     const [start_date, setStartDate] = useState(new Date());
     const [end_date, setEndDate] = useState(new Date());
     
@@ -62,7 +70,7 @@ const User=()=>{
           ]
         }
       })
-       
+     setState(true)  
         
     }
     return(
@@ -72,7 +80,7 @@ const User=()=>{
         <label>End date</label>
         <DatePicker selected={end_date} onChange={date => setEndDate(date)} />
         <button onClick={handleSubmit}>Submit</button>
-        <Bar
+       {isState && <Bar
           data={data.chartData}
           width={30}
           height={15}
@@ -87,7 +95,7 @@ const User=()=>{
             //   position:this.props.legendPosition
             // }
           }}
-        />
+        />} 
        
 
     </div>

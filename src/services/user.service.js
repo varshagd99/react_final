@@ -15,7 +15,6 @@ const getAdminBoard = () => {
         method:'POST',
         headers:authHeader(),
         body:JSON.stringify({
-  
           start_date:start_date,
           end_date:end_date,
         

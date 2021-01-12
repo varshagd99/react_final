@@ -11,6 +11,8 @@ from jwt_token import encodeAuthToken,decodeAuthToken
 app=Flask(__name__)
 CORS(app)
 
+
+
 def check_header(request):
 
     auth_header = request.headers.get('Authorization')
@@ -24,7 +26,7 @@ def check_header(request):
         print(decoded)
         if not isinstance(decoded, str):
             if decoded['admin']:
-                return [decoded['sub'],'A']
+                return[decoded['sub'],'A']
             else:
                 return [decoded['sub'],'U']
 
@@ -98,12 +100,16 @@ def login():
                 if x :
                     user_id=usertable[0]
                     user_type=usertable[4]
+                    # byte_token=encodeAuthToken(user_id,user_type)
+                    # auth_token=byte_token.decode('UTF_8')
                     auth_token=encodeAuthToken(user_id,user_type)
+                    print(auth_token)
 
                     msg = 'Login Successful'
                 
                 else :
-                    return jsonify({'status':False,
+                    return jsonify(
+                    {'status':False,
                     'msg':'Wrong Password'})
 
 
@@ -111,12 +117,12 @@ def login():
             cur.close()
             con.close()
             print(msg)
+        
 
-        return  jsonify({
+        return jsonify({
 
             'status':True,
-            'auth_token':auth_token
-        })
+            'auth_token':auth_token})
     
     except Exception as e:
         return jsonify({
@@ -130,13 +136,15 @@ def login():
 def emotionGraph():
     data = json.loads(request.data)
     data_1=check_header(request)
+    print(data_1)
     user_id = data_1[0]
     start_date = data['start_date']
     end_date = data['end_date']
-    print(data_1)
+
+
     
-    # start_date = '2021-01-01'
-    # end_date = '2021-01-03'
+    print(user_id)
+
 
     con = psycopg2.connect('postgres://pmotbfypffbrrt:1f75e4090383473f9d5fd2614ae03b839cb94c7c1d2d37941be23fa549ba4c44@ec2-50-19-247-157.compute-1.amazonaws.com:5432/d276mkc2k6kji4')
     cur = con.cursor()
