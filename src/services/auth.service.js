@@ -40,22 +40,8 @@ const getCurrentUser = () => {
 };
 
 
-const Emotion = (start_date,end_date)=>{
-  return fetch('/emotionGraph',{
-      method:'POST',
-      body:JSON.stringify({
 
-        start_date:start_date,
-        end_date:end_date,
-        
-
-
-      })
-     
-  }).then(response=>response.json())
-  
-}
 // console.log(Emotion)
-export default {register,login,logout,getCurrentUser,Emotion}
+export default {register,login,logout,getCurrentUser}
 
 

@@ -22,6 +22,7 @@ def encodeAuthToken(user_id, user_type):
             'admin': admin
         }
         token = jwt.encode(payload, 'super-secret-key', algorithm='HS256')
+        print(token)
         return token
     except Exception as e:
         print(e)
@@ -37,11 +38,12 @@ def check_header(request):
 
     if token:
         decoded = decodeAuthToken(token)
+        print(decoded)
         if not isinstance(decoded, str):
             if decoded['admin']:
-                return 'A'
+                return[decoded['sub'],'A']
             else:
-                return 'U'
+                return [decoded['sub'],'U']
 
 @app.route('/api')
 def index():
@@ -113,7 +115,8 @@ def login():
                 if x :
                     user_id=usertable[0]
                     user_type=usertable[4]
-                    auth_token=encodeAuthToken(user_id,user_type)
+                    byte_token=encodeAuthToken(user_id,user_type)
+                    auth_token=byte_token.decode('UTF_8')
                     print(auth_token)
 
                     msg = 'Login Successful'
@@ -133,7 +136,7 @@ def login():
         return jsonify({
 
             'status':True,
-            'auth_token':str(auth_token)})
+            'auth_token':auth_token})
     
     except Exception as e:
         return jsonify({
@@ -146,11 +149,16 @@ def login():
 @app.route("/emotionGraph",methods=['GET', 'POST'])
 def emotionGraph():
     data = json.loads(request.data)
-    print(data)
-    #user_id = data['user_id']
-    user_id = 17
+    data_1=check_header(request)
+    print(data_1)
+    user_id = data_1[0]
     start_date = data['start_date']
     end_date = data['end_date']
+
+
+    
+    print(user_id)
+
 
     con = psycopg2.connect('postgres://pmotbfypffbrrt:1f75e4090383473f9d5fd2614ae03b839cb94c7c1d2d37941be23fa549ba4c44@ec2-50-19-247-157.compute-1.amazonaws.com:5432/d276mkc2k6kji4')
     cur = con.cursor()

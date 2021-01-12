@@ -16,6 +16,7 @@ const App=()=> {
 
  useEffect(() => {
     const user = AuthService.getCurrentUser();
+    document.title ='Facial Emotion Recognition'
 
     if (user) {
       setCurrentUser(user);
