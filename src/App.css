@@ -99,3 +99,7 @@ label {
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+
+.form-control{
+  width: 400px;
+}

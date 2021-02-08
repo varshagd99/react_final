@@ -1,10 +1,11 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 
 
  const First=() =>{
+    console.log('inside first')
 
     useEffect(()=>{
-        fetch('/api').then(data=>console.log(data.json()))
+        fetch('/api').then(data=>console.log(data.name))
     },[])
     
     return (

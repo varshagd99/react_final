@@ -1,4 +1,9 @@
 
+const api = ()=>{
+  return fetch('/api',{
+      method:'GET'
+  }).then(response=>console.log('hello00000000'))
+}
 
 const register = (username,email,password)=>{
     return fetch('/register',{
@@ -10,7 +15,7 @@ const register = (username,email,password)=>{
       password:password
 
 
-        })
+      })
     }).then(response=>response.json())
 }
 
@@ -42,6 +47,6 @@ const getCurrentUser = () => {
 
 
 // console.log(Emotion)
-export default {register,login,logout,getCurrentUser}
+export default {register,login,logout,getCurrentUser,api}
 
 

@@ -11,22 +11,7 @@ from jwt_token import encodeAuthToken,decodeAuthToken
 app=Flask(__name__)
 CORS(app)
 
-def encodeAuthToken(user_id, user_type):
-    try:
-        admin = True if user_type=='A' else False
 
-        payload = {
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=60),
-            'iat': datetime.datetime.utcnow(),
-            'sub': user_id,
-            'admin': admin
-        }
-        token = jwt.encode(payload, 'super-secret-key', algorithm='HS256')
-        print(token)
-        return token
-    except Exception as e:
-        print(e)
-        return e
 
 def check_header(request):
 
@@ -52,7 +37,7 @@ def index():
     cur.execute("select * from users")
     row = cur.fetchall()
     for r in row:
-      print (f"{r[0]} name {r[1]} email {r[2]}")
+      print (f" name {r[1]} email {r[2]}")
     cur.close()
     con.close()
     return "<h2>hello</h2>"
@@ -117,6 +102,7 @@ def login():
                     user_type=usertable[4]
                     byte_token=encodeAuthToken(user_id,user_type)
                     auth_token=byte_token.decode('UTF_8')
+                    #auth_token=encodeAuthToken(user_id,user_type)
                     print(auth_token)
 
                     msg = 'Login Successful'
@@ -136,7 +122,8 @@ def login():
         return jsonify({
 
             'status':True,
-            'auth_token':auth_token})
+            'auth_token':str(auth_token),
+            'user_type':user_type})
     
     except Exception as e:
         return jsonify({
@@ -168,7 +155,7 @@ def emotionGraph():
 
     response = {'angry':x[0],'disgusted':x[1],'fearful':x[2],'happy':x[3],'neutral':x[4],'sad':x[5],'surprise':x[6]}
 
-    return(response)
+    return jsonify({'data':list(x)})
 
 
 if __name__=="__main__":

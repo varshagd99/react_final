@@ -1,6 +1,6 @@
 import React from 'react';
 import './Home.css'
-import {Jumbotron,button} from 'react-bootstrap'
+import {Jumbotron} from 'react-bootstrap'
 
 
 
@@ -10,7 +10,6 @@ const Home=()=>{
         <Jumbotron className="Jumbo">
         <h1>Facial Emotional Analysis</h1>
         <div className="face">
-            Hello
         </div>
 
         </Jumbotron>

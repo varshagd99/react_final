@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import AuthService from "./services/auth.service"
 import { Switch, Route, Link } from "react-router-dom";
-
+import First from './Components/First'
 import Register from "./Components/Register";
 import Home from "./Components/Home";
 import Login from "./Components/Login";
@@ -29,9 +29,10 @@ const App=()=> {
   }
   return (
     <div className="App">
+      
        <nav className="navbar navbar-expand navbar-dark">
         <Link to={"/"} className="navbar-brand">
-          Home
+         <font size="4"> <i class="fa fa-home" aria-hidden="true"></i> Home</font>
         </Link>
         
 
@@ -39,7 +40,7 @@ const App=()=> {
           <div className="navbar-nav ml-auto">
             
             <li className="nav-item">
-              <a href="/login" className="nav-link" onClick={logOut}>
+              <a href="/login" className="nav-link"  onClick={logOut}>
                 LogOut
               </a>
             </li>

@@ -10,8 +10,8 @@ const getAdminBoard = () => {
   };
 
  
-  const Emotion = (start_date,end_date)=>{
-    return fetch('/emotionGraph',{
+  const Emotion = async(start_date,end_date)=>{
+        const response=await fetch('/emotionGraph',{
         method:'POST',
         headers:authHeader(),
         body:JSON.stringify({
@@ -21,10 +21,10 @@ const getAdminBoard = () => {
   
   
         })
-       
-    }).then(response=>response.json())
-    
-  }
+
+    })
+    return response.json()
+  } 
   export default {
   
     getUserBoard,
