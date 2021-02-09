@@ -30,17 +30,17 @@ def check_header(request):
             else:
                 return [decoded['sub'],'U']
 
-@app.route('/api')
+@app.route('/api',methods=['GET'])
 def index():
     con = psycopg2.connect('postgres://pmotbfypffbrrt:1f75e4090383473f9d5fd2614ae03b839cb94c7c1d2d37941be23fa549ba4c44@ec2-50-19-247-157.compute-1.amazonaws.com:5432/d276mkc2k6kji4')
     cur = con.cursor()
-    cur.execute("select * from users")
+    cur.execute("select user_name from users")
     row = cur.fetchall()
-    for r in row:
-      print (f" name {r[1]} email {r[2]}")
+    # for r in row:
+    #   print (f" name {r[1]} email {r[2]}")
     cur.close()
     con.close()
-    return "<h2>hello</h2>"
+    return {'name':row}
 
 @app.route('/register', methods =['POST'])
 def register(): 

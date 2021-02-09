@@ -2,7 +2,7 @@
 const api = ()=>{
   return fetch('/api',{
       method:'GET'
-  }).then(response=>console.log('hello00000000'))
+  }).then(response=>console.log(response))
 }
 
 const register = (username,email,password)=>{

@@ -17,27 +17,28 @@ function User(){
     const currentUser = AuthService.getCurrentUser();
     const [isState,setState]=useState(false);
     //let state1=0;
-    
+    const [name,setName]=useState({});
     const [start_date, setStartDate] = useState(new Date());
     const [end_date, setEndDate] = useState(new Date());
     const [render, setRender] = useState(false);
     const [Emotions, setEmotions] = useState(false);
     const [Dropdown,setDropdown] = useState(false)
-    const [Admin,setAdmin] = useState(false)
     console.log(currentUser);
     //  let response=First.First()
     //  console.log(response.data)
 
-    // if(currentUser.user_type == 'A')
-    // {
-    //   setAdmin(true)
-    // }
-   
+   useEffect(() => {
+      console.log('user data')
+      fetch('/api').then(response => {
+        if(response.ok){
+          return response.json()
+        }
+      }).then(datas => console.log(datas))
+    },[])
+    console.log("inside user")
 
     const options = [
-      { value: 'chocolate', label: 'Chocolate' },
-      { value: 'strawberry', label: 'Strawberry' },
-      { value: 'vanilla', label: 'Vanilla' }
+      {  label:'choco',values:'choco' }
     ]
     
     const [data,setData] =useState({
@@ -107,8 +108,9 @@ function User(){
     }
     return(
     <div>
-      {/* <First/>
-      <Profile/> */}
+      <First/>
+      {/* <Profile/> */}
+      <authService/>
          <Jumbotron>
         <div>
           <div>
