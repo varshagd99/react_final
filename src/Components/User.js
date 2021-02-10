@@ -8,8 +8,7 @@ import {Bar} from 'react-chartjs-2';
 import { Jumbotron } from "react-bootstrap";
 import AuthService from "../services/auth.service";
 import Select from 'react-select';
-import First from './First'
-import Profile from "./Profile";
+import { First } from "react-bootstrap/esm/PageItem";
 
 
 
@@ -22,25 +21,16 @@ function User(){
     const [end_date, setEndDate] = useState(new Date());
     const [render, setRender] = useState(false);
     const [Emotions, setEmotions] = useState(false);
-    const [Dropdown,setDropdown] = useState(false);
-    const [Camera,setCamera]  = useState(false);
+    const [Dropdown,setDropdown] = useState(false)
+    const [options,setOptions]=useState([])
+    const [Camera,setCamera] = useState(false)
     console.log(currentUser);
     //  let response=First.First()
     //  console.log(response.data)
 
-    useEffect(() => {
-      console.log('user data')
-      fetch('/api').then(response => {
-        if(response.ok){
-          return response.json()
-        }
-      }).then(data => console.log(data))
-    },[])
-    console.log("inside user")
+   
 
-    const options = [
-      { value: 'chocolate', label: 'Chocolate' }
-    ]
+    
     
     const [data,setData] =useState({
         chartData:{
@@ -66,9 +56,20 @@ function User(){
 
     const handle = () =>{
       setRender(true)
+      setEmotions(true)
       setDropdown(true)
-      
-    }
+      fetch('/api').then(response => {
+        if(response.ok){
+          return response.json()
+        }
+      }).then(datas => {
+        const data=datas.name
+        const op=data.map(d=>({
+          "value":d,
+      "label":d}))
+        setOptions(op)
+      })
+     }
 
     const HandleCamera = () =>{
       setCamera(true)
@@ -80,10 +81,7 @@ function User(){
       setDropdown(false)
     }
 
-   useEffect(() => {
-       console.log(data)
-   }, [data])
-
+   
     const handleSubmit = async() =>{
     
       let response=await UserService.Emotion( start_date, end_date)
@@ -113,10 +111,10 @@ function User(){
     }
     return(
     <div>
-      <First/>
+  
       {/* <Profile/> */}
-      <authService/>
-         <Jumbotron>
+        {/* <First/> */}
+        <Jumbotron>
         <div>
           <div>
           <ul class="nav nav-tabs">
@@ -124,7 +122,7 @@ function User(){
           <li class="active" className="nav-item-user"><a href="#"className="link" onClick={Emotion}>Your Emotion</a></li>
           {currentUser.user_type == 'A' && <li className="nav-item-user"><a href="#" className="link" onClick={handle}>Employee Emotion</a></li>}
           
-          <li className="nav-item-user"><a href="#" className="link" onClick={HandleCamera}>Procter</a></li>
+          <li className="nav-item-user"><a href="#" className="link">Procter</a></li>
           {Camera && <img src="{{ url_for('video_feed') }}"></img>}
         </ul>
         </div>
