@@ -8,8 +8,7 @@ import {Bar} from 'react-chartjs-2';
 import { Jumbotron } from "react-bootstrap";
 import AuthService from "../services/auth.service";
 import Select from 'react-select';
-import First from './First'
-import Profile from "./Profile";
+
 
 
 
@@ -23,23 +22,14 @@ function User(){
     const [render, setRender] = useState(false);
     const [Emotions, setEmotions] = useState(false);
     const [Dropdown,setDropdown] = useState(false)
+    const [options,setOptions]=useState([])
     console.log(currentUser);
     //  let response=First.First()
     //  console.log(response.data)
 
-   useEffect(() => {
-      console.log('user data')
-      fetch('/api').then(response => {
-        if(response.ok){
-          return response.json()
-        }
-      }).then(datas => console.log(datas))
-    },[])
-    console.log("inside user")
+   
 
-    const options = [
-      {  label:'choco',values:'choco' }
-    ]
+    
     
     const [data,setData] =useState({
         chartData:{
@@ -65,9 +55,20 @@ function User(){
 
     const handle = () =>{
       setRender(true)
+      setEmotions(true)
       setDropdown(true)
-      
-    }
+      fetch('/api').then(response => {
+        if(response.ok){
+          return response.json()
+        }
+      }).then(datas => {
+        const data=datas.name
+        const op=data.map(d=>({
+          "value":d,
+      "label":d}))
+        setOptions(op)
+      })
+     }
 
     const Emotion = () =>{
       console.log('hello')
@@ -75,10 +76,7 @@ function User(){
       setDropdown(false)
     }
 
-   useEffect(() => {
-       console.log(data)
-   }, [data])
-
+   
     const handleSubmit = async() =>{
     
       let response=await UserService.Emotion( start_date, end_date)
@@ -108,9 +106,9 @@ function User(){
     }
     return(
     <div>
-      <First/>
+  
       {/* <Profile/> */}
-      <authService/>
+     
          <Jumbotron>
         <div>
           <div>

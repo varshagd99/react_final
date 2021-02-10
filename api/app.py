@@ -7,6 +7,7 @@ from flask_cors import CORS
 import jwt
 import datetime
 from jwt_token import encodeAuthToken,decodeAuthToken
+import functools,operator
 
 app=Flask(__name__)
 CORS(app)
@@ -36,11 +37,16 @@ def index():
     cur = con.cursor()
     cur.execute("select user_name from users")
     row = cur.fetchall()
+    data_row=[]
+    for i in row:
+        for j in i:
+            data_row.append(j)
+    print(data_row)
     # for r in row:
     #   print (f" name {r[1]} email {r[2]}")
     cur.close()
     con.close()
-    return {'name':row}
+    return {'name':data_row}
 
 @app.route('/register', methods =['POST'])
 def register(): 
