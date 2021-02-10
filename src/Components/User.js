@@ -22,7 +22,8 @@ function User(){
     const [end_date, setEndDate] = useState(new Date());
     const [render, setRender] = useState(false);
     const [Emotions, setEmotions] = useState(false);
-    const [Dropdown,setDropdown] = useState(false)
+    const [Dropdown,setDropdown] = useState(false);
+    const [Camera,setCamera]  = useState(false);
     console.log(currentUser);
     //  let response=First.First()
     //  console.log(response.data)
@@ -67,6 +68,10 @@ function User(){
       setRender(true)
       setDropdown(true)
       
+    }
+
+    const HandleCamera = () =>{
+      setCamera(true)
     }
 
     const Emotion = () =>{
@@ -119,7 +124,8 @@ function User(){
           <li class="active" className="nav-item-user"><a href="#"className="link" onClick={Emotion}>Your Emotion</a></li>
           {currentUser.user_type == 'A' && <li className="nav-item-user"><a href="#" className="link" onClick={handle}>Employee Emotion</a></li>}
           
-          <li className="nav-item-user"><a href="#" className="link" >Procter</a></li>
+          <li className="nav-item-user"><a href="#" className="link" onClick={HandleCamera}>Procter</a></li>
+          {Camera && <img src="{{ url_for('video_feed') }}"></img>}
         </ul>
         </div>
 
@@ -137,7 +143,7 @@ function User(){
         <div class="col-sm">
         <label><font size="3">End date</font></label>
           <DatePicker selected={end_date} onChange={date => setEndDate(date)} width="276" id="endDate" className="date"/>
-          
+    
             
         </div>
         

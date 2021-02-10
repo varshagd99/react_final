@@ -7,8 +7,19 @@ from flask_cors import CORS
 import jwt
 import datetime
 from jwt_token import encodeAuthToken,decodeAuthToken
-
+import numpy as np
+import argparse
+import cv2
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout, Flatten
+from tensorflow.keras.layers import Conv2D
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.layers import MaxPooling2D
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import os
+import time
 app=Flask(__name__)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 CORS(app)
 
 
@@ -158,6 +169,13 @@ def emotionGraph():
     response = {'angry':x[0],'disgusted':x[1],'fearful':x[2],'happy':x[3],'neutral':x[4],'sad':x[5],'surprise':x[6]}
 
     return jsonify({'data':list(x)})
+
+@app.route('/video_feed')
+def video_feed():
+    """Video streaming route. Put this in the src attribute of an img tag."""
+    return Response(gen(),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 
 if __name__=="__main__":
