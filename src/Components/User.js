@@ -129,7 +129,7 @@ function User(){
           </div>}
         
         <div class="col-sm">
-        <label><font size="3">Start date</font></label> 
+        <label><font size="3">Start date</font></label>
           <DatePicker selected={start_date} onChange={date => setStartDate(date)} width="276" id="startDate" className="date"/>
         </div>
         <div class="col-sm">
