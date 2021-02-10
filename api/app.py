@@ -36,11 +36,13 @@ def index():
     cur = con.cursor()
     cur.execute("select user_name from users")
     row = cur.fetchall()
-    # for r in row:
-    #   print (f" name {r[1]} email {r[2]}")
+    names =[]
+    for r in row:
+        names.append(list(r))
+    print (names)
     cur.close()
     con.close()
-    return {'name':row}
+    return {'name':names}
 
 @app.route('/register', methods =['POST'])
 def register(): 

@@ -27,18 +27,18 @@ function User(){
     //  let response=First.First()
     //  console.log(response.data)
 
-   useEffect(() => {
+    useEffect(() => {
       console.log('user data')
       fetch('/api').then(response => {
         if(response.ok){
           return response.json()
         }
-      }).then(datas => console.log(datas))
+      }).then(data => console.log(data))
     },[])
     console.log("inside user")
 
     const options = [
-      {  label:'choco',values:'choco' }
+      { value: 'chocolate', label: 'Chocolate' }
     ]
     
     const [data,setData] =useState({
@@ -131,7 +131,7 @@ function User(){
           </div>}
         
         <div class="col-sm">
-        <label><font size="3">Start date</font></label> 
+        <label><font size="3">Start date</font></label>
           <DatePicker selected={start_date} onChange={date => setStartDate(date)} width="276" id="startDate" className="date"/>
         </div>
         <div class="col-sm">
