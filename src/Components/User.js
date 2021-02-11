@@ -9,14 +9,16 @@ import { Jumbotron } from "react-bootstrap";
 import AuthService from "../services/auth.service";
 import Select from 'react-select';
 import { First } from "react-bootstrap/esm/PageItem";
+import userService from "../services/user.service";
+import authHeader from "../services/auth-header";
 
 
-
+let nameSelected
 function User(){
     const currentUser = AuthService.getCurrentUser();
     const [isState,setState]=useState(false);
     //let state1=0;
-    const [name,setName]=useState({});
+    const [user_name,setName]=useState("");
     const [start_date, setStartDate] = useState(new Date());
     const [end_date, setEndDate] = useState(new Date());
     const [render, setRender] = useState(false);
@@ -24,7 +26,9 @@ function User(){
     const [Dropdown,setDropdown] = useState(false)
     const [options,setOptions]=useState([])
     const [Camera,setCamera] = useState(false)
+    const [Admin,setAdmin] = useState(false);
     console.log(currentUser);
+    const [dropdownvalue,setDropdownvalue] =useState('')
     //  let response=First.First()
     //  console.log(response.data)
 
@@ -68,23 +72,36 @@ function User(){
           "value":d,
       "label":d}))
         setOptions(op)
+        console.log(datas)
       })
      }
+   console.log(options)
 
     const HandleCamera = () =>{
       setCamera(true)
+      setEmotions(false)
+      setState(false)
     }
 
     const Emotion = () =>{
       console.log('hello')
+      setState(true)
       setEmotions(true)
       setDropdown(false)
     }
 
-   
+    const handleDropdown =(e) =>{
+      nameSelected=e.value
+      console.log(nameSelected)
+     
+    }
+
     const handleSubmit = async() =>{
-    
-      let response=await UserService.Emotion( start_date, end_date)
+      console.log(nameSelected)
+      let user_id = await userService.user_id(nameSelected)
+      console.log(user_id.name)
+      let id =user_id.name
+      let response=await UserService.Emotion(id, start_date, end_date)
       console.log(response.data)
       setData({
         chartData:{
@@ -109,6 +126,8 @@ function User(){
      setState(true)  
         
     }
+
+    
     return(
     <div>
   
@@ -122,7 +141,7 @@ function User(){
           <li class="active" className="nav-item-user"><a href="#"className="link" onClick={Emotion}>Your Emotion</a></li>
           {currentUser.user_type == 'A' && <li className="nav-item-user"><a href="#" className="link" onClick={handle}>Employee Emotion</a></li>}
           
-          <li className="nav-item-user"><a href="#" className="link">Procter</a></li>
+          <li className="nav-item-user"><a href="#" className="link" onClick={HandleCamera}>Procter</a></li>
           {Camera && <img src="{{ url_for('video_feed') }}"></img>}
         </ul>
         </div>
@@ -131,8 +150,11 @@ function User(){
       <div class="row">
       {Dropdown && <div class="col-sm">
           
-          <Select placeholder="Select Name" options={options} className="dropdown"/>
-          </div>}
+          <Select placeholder="Select Name" options={options} className="dropdown" onChange={handleDropdown}  />
+         
+          </div> 
+          
+         }
         
         <div class="col-sm">
         <label><font size="3">Start date</font></label>

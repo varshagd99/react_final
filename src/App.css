@@ -8,29 +8,39 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 50vmin;
   pointer-events: none;
 }
 
-.nav {
-  background: rgba(0,0,0,0.5);
-  border-bottom: #282c34;
+.navbar {
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  -moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
 .nav-item {
-  font-size: 1vw;
-  font-weight: bold;
-  color: white;
-  background:rgba(5,5,5,0.5);
-  border-radius: 10px;
+ 
   padding-top: 2px;
   padding-bottom: 2px;
   padding-left: 17px;
   padding-right: 17px;
-  border-width: 2px;
-  border-color: aliceblue;
   margin-right: 20px;
+  background: rgba(0,0,0,0.5);
+  border: 2px solid #fff;
+  border-radius: 20px;
+  outline:none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+
+  border-color: goldenrod;
+  width: auto;
+
 }
+
+
 
 
 @media (prefers-reduced-motion: no-preference) {

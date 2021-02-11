@@ -33,7 +33,7 @@ const App=()=> {
       
        <nav className="navbar navbar-expand navbar-dark">
         <Link to={"/"} className="navbar-brand">
-         <font size="4"> <i class="fa fa-home" aria-hidden="true"></i> Home</font>
+         <font size="5"> <i class="fa fa-home" aria-hidden="true"></i> HOME</font>
         </Link>
         
 

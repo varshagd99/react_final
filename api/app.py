@@ -152,9 +152,9 @@ def login():
 @app.route("/emotionGraph",methods=['GET', 'POST'])
 def emotionGraph():
     data = json.loads(request.data)
-    data_1=check_header(request)
-    print(data_1)
-    user_id = data_1[0]
+    # data_1=check_header(request)
+    # print(data_1)
+    user_id = data['id']
     start_date = data['start_date']
     end_date = data['end_date']
 
@@ -173,13 +173,34 @@ def emotionGraph():
 
     return jsonify({'data':list(x)})
 
+@app.route('/name',methods=['GET', 'POST'])
+def name():
+    data = json.loads(request.data)
+    user_name = data['user_name']
+    print(data)
+    # data_1=check_header(request)
+    # print(data_1)
+    # user_id = data_1[0]
+    # print(user_id)
+    con = psycopg2.connect('postgres://pmotbfypffbrrt:1f75e4090383473f9d5fd2614ae03b839cb94c7c1d2d37941be23fa549ba4c44@ec2-50-19-247-157.compute-1.amazonaws.com:5432/d276mkc2k6kji4')
+    cur = con.cursor()
+    cur.execute("select user_id from users where user_name=%s",(user_name,))
+    name =[]
+    names = cur.fetchone()
+    for i in names:
+        name.append(i)
+    print(name[0])
+    cur.close()
+    con.close()
+    return {'name':name[0]}
+
 coun=0
 if coun == 0:
-    @app.route('/')
-    def index1():
-        """Video streaming home page."""
-        return render_template('C:\\Users\\HP\\Desktop\\final_year_project\\react_final\\public\\index.html')
-    def gen():    
+    @app.route('/feed')
+    # def index1():
+    #     """Video streaming home page."""
+    #     return render_template('C:\\Users\\HP\\Desktop\\final_year_project\\react_final\\public\\index.html')
+    def gen():
         model = Sequential()
 
         model.add(Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(48,48,1)))
