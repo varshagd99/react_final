@@ -187,7 +187,7 @@ function User(){
           options={{
             title:{
               display:true,
-              text:'Emotion Analysis ',
+              text:'Emotion Analysis',
               fontSize:25
             },
             // legend:{
@@ -195,7 +195,9 @@ function User(){
             //   position:this.props.legendPosition
             // }
           }}
-        />} 
+        />}
+        <h2> {nameSelected}</h2>
+       
          </Jumbotron>
 
 

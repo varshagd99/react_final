@@ -13,7 +13,7 @@ const Home=()=>{
         </div>
 
         </Jumbotron>
-       
+
     </div>);
 }
 export default Home

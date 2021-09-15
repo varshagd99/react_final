@@ -106,7 +106,7 @@ const Register = (props) => {
     <div className="col-md-12">
       <div className="card card-container">
         <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          src="https://cdn1.vectorstock.com/i/thumb-large/38/10/solid-purple-gradient-user-icon-web-icon-vector-23623810.jpg"
           alt="profile-img"
           className="profile-img-card"
         />
